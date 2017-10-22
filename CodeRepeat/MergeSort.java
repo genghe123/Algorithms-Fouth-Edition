@@ -11,8 +11,7 @@ public class MergeSort {
 	private static final int cutOff = 7; //cutoff to insertion sort
 
 	//This class should not be instantiated.
-	private MergeSort() {
-	}
+    private MergeSort() { }
 
 	//Stable merge a[lo .. mid] with a[mid+1  hi] using aux[lo .. hi]
 	//This kind of merge should check four boundaries of two sub-arrarys.
@@ -27,19 +26,19 @@ public class MergeSort {
 
 		//If a[mid] <= a[mid+1], it means two sub-arrays are sorted already, return.
 		//HelperFunc.less(a,b) returns true only when a < b, not a <= b.
-		if ( a[mid].compareTo(a[mid + 1]) <= 0 ) return;
+        // if ( a[mid].compareTo(a[mid + 1]) <= 0 ) return;
 
 		//Copy sub-array to aux[]. This array is initialed before recursion.
-		for ( int k = lo; k <= hi; k++ )
-			aux[k] = a[k];
+        //for ( int k = lo; k <= hi; k++ )
+        //	aux[k] = a[k];
 
 		int i = lo, j = mid + 1;
 		for ( int k = lo; k <= hi; k++ ) {
-			if ( i > mid ) a[k] = aux[j++];
-			else if ( j > hi ) a[k] = aux[i++];
-			else if ( HelperFunc.less(aux[i], aux[j]) ) a[k] = aux[i++];
-			else a[k] = aux[j++];
-		}
+            if (i > mid) aux[k] = a[j++];
+            else if (j > hi) aux[k] = a[i++];
+            else if (HelperFunc.less(a[i], a[j])) aux[k] = a[i++];
+            else aux[k] = a[j++];
+        }
 		//assert HelperFunc.isSorted(a,lo,hi);
 	}
 
@@ -79,7 +78,9 @@ public class MergeSort {
 		//Initial auxiliary array here in order to avoid any other initializations during recursion.
 		//If initials in recursive topDownSort function, each call would pay extra time to initial a new array.
 		Comparable[] aux = new Comparable[a.length];
-		topDownSort(a, aux, 0, a.length - 1);
+        for (int i = 0; i < a.length; i++)
+            aux[i] = a[i];
+        topDownSort(a, aux, 0, a.length - 1);
 		HelperFunc.isSorted(a);
 		System.out.println(stopwatch.elapsedTime());
 	}
@@ -95,9 +96,9 @@ public class MergeSort {
 		//Define mid in the form below
 		//Because if defines mid as "(lo+hi)/2", this might excess the max limit of Integer when calculating (lo+hi)..
 		int mid = lo + (hi - lo) / 2;
-		topDownSort(a, aux, lo, mid);
-		topDownSort(a, aux, mid + 1, hi);
-		stableMerge(a, aux, lo, mid, hi);
+        topDownSort(aux, a, lo, mid);
+        topDownSort(aux, a, mid + 1, hi);
+        stableMerge(a, aux, lo, mid, hi);
 	}
 
 	@Contract( "null -> fail" )
