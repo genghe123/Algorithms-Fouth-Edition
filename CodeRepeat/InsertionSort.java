@@ -1,6 +1,5 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Stopwatch;
-import org.jetbrains.annotations.Contract;
 
 import java.util.Comparator;
 
@@ -33,7 +32,6 @@ public class InsertionSort {
 	 * @param lo    lower bound index of sub-array.
 	 * @param hi    upper bound index of sub-array.
 	 */
-	@Contract( "null, _, _ -> fail" )
 	public static void ordinarySort(Comparable[] array, int lo, int hi) {
 		assert array != null;
 		assert lo >= 0 && hi < array.length && lo <= hi;

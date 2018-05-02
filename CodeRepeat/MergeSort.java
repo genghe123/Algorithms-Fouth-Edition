@@ -1,6 +1,5 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Stopwatch;
-import org.jetbrains.annotations.Contract;
 
 /**
  * @author Herman Geng
@@ -15,7 +14,6 @@ public class MergeSort {
 
 	//Stable merge a[lo .. mid] with a[mid+1  hi] using aux[lo .. hi]
 	//This kind of merge should check four boundaries of two sub-arrarys.
-	@Contract( "null, _, _, _, _ -> fail; !null, null, _, _, _ -> fail" )
 	private static void stableMerge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
 		//assert a != null && aux != null;
 		//assert lo >= 0 && hi <= a.length && lo <= mid && mid <= hi;
@@ -70,7 +68,6 @@ public class MergeSort {
 	 *
 	 * @param a the array to be sorted.
 	 */
-	@Contract( "null -> fail" )
 	public static void topDownSort(Comparable[] a) {
 		assert a != null;
 		Stopwatch stopwatch = new Stopwatch();
@@ -101,7 +98,6 @@ public class MergeSort {
         stableMerge(a, aux, lo, mid, hi);
 	}
 
-	@Contract( "null -> fail" )
 	public static void bottomUpSort(Comparable[] a) {
 		Stopwatch stopwatch = new Stopwatch();
 		int length = a.length;
@@ -121,7 +117,6 @@ public class MergeSort {
 
 	//public static void naturalMergeSort(Comparable[] a)
 
-	@Contract( "null, _, _, _, _, _ -> fail" )
 	private static void stableIndexMerge(Comparable[] a, int[] index, int[] aux, int lo, int mid, int hi) {
 		assert a != null && aux != null & index != null;
 		assert lo >= 0 && hi <= a.length && lo <= mid && mid <= hi;
@@ -145,7 +140,6 @@ public class MergeSort {
 	 * @return a permutation {@code p[]} such that {@code a[p[0]]},{@code a[p[1]]},
 	 * ...... , {@code a[p[n-1]]} are in ascending order
 	 */
-	@Contract( "null -> fail" )
 	public static int[] indexSort(Comparable[] a) {
 		assert a != null;
 		Stopwatch stopwatch = new Stopwatch();

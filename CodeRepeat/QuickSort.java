@@ -1,7 +1,6 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.Stopwatch;
-import org.jetbrains.annotations.Contract;
 
 /**
  * The {@code Quick} class provides static methods for sorting an
@@ -20,10 +19,8 @@ public class QuickSort {
 	 *
 	 * @param a the array to be sorted.
 	 */
-	@Contract( "null -> fail" )
 	public static void ordinarySort(Comparable[] a) {
 		assert a != null;
-
 		Stopwatch stopwatch = new Stopwatch();
 		StdRandom.shuffle(a);
 		ordinarySort(a, 0, a.length - 1);
@@ -31,7 +28,15 @@ public class QuickSort {
 		System.out.println(stopwatch.elapsedTime());
 	}
 
-	@Contract( "null, _, _ -> fail" )
+	public static void quick3WaySort(Comparable[] a) {
+		assert a != null;
+		Stopwatch stopwatch = new Stopwatch();
+		StdRandom.shuffle(a);
+		quick3WaySort(a, 0, a.length - 1);
+		assert HelperFunc.isSorted(a);
+		System.out.println(stopwatch.elapsedTime());
+	}
+
 	private static void ordinarySort(Comparable[] a, int lo, int hi) {
 		assert a != null;
 		assert lo >= 0 && hi < a.length;
@@ -42,6 +47,26 @@ public class QuickSort {
 		ordinarySort(a, j + 1, hi);
 
 		HelperFunc.isSorted(a);
+	}
+
+	private static void quick3WaySort(Comparable[] a, int lo, int hi) {
+		assert a != null;
+		assert lo >= 0 && hi < a.length;
+
+		if (lo >= hi) return;
+		int lt = lo, gt = hi;
+		Comparable v = a[lo];
+		int t = lo;
+		while (t <= gt) {
+			int cmp = a[t].compareTo(a[lo]);
+			if (cmp < 0) HelperFunc.exch(a, lt++, t++);
+			else if (cmp > 0) HelperFunc.exch(a, t, gt--);
+			else t++;
+		}
+
+		quick3WaySort(a, lo, lt - 1);
+		quick3WaySort(a, gt + 1, hi);
+		assert HelperFunc.isSorted(a, lo, hi);
 	}
 
 	//Partition the sub-array a[lo .. hi] so that a[lo .. j-1] <= a[j] <= a[j+1 .. hi]
@@ -79,7 +104,6 @@ public class QuickSort {
 	 * @param k the rank of the key
 	 * @return the key of rank {@code k}
 	 */
-	@Contract( "null, _ -> fail" )
 	public static Comparable select(Comparable[] a, int k) {
 		assert a != null;
 		if ( k < 0 || k >= a.length ) throw new IndexOutOfBoundsException("Selected elements out of bounds.");
